@@ -1,0 +1,55 @@
+# Example configuration file for phage display NGS analysis pipeline
+# Copy and modify this file for your experiment
+
+# Output directory for all results
+output_dir: phage_ngs_results
+
+# Library file (FASTA format with all library member sequences)
+library: path/to/library.fasta
+
+# Flanking sequences around the variable region (if applicable)
+# These help extract just the variable/randomized region from reads
+flanking_sequences:
+  upstream: GCTAGC    # Sequence immediately upstream of variable region
+  downstream: GGATCC  # Sequence immediately downstream of variable region
+
+# Input/naive library sample name (for enrichment calculations)
+input_sample: naive_library
+
+# Sample definitions
+samples:
+  - name: naive_library
+    fastq: path/to/naive_library.fastq.gz
+    description: "Naive library input"
+
+  - name: round1
+    fastq: path/to/round1.fastq.gz
+    description: "Selection round 1"
+
+  - name: round2
+    fastq: path/to/round2.fastq.gz
+    description: "Selection round 2"
+
+  - name: round3
+    fastq: path/to/round3.fastq.gz
+    description: "Selection round 3"
+
+# Quality assessment settings
+quality_assessment:
+  enabled: true
+  sample_size: 100000  # Subsample for faster QC (null for all reads)
+  generate_plots: true
+
+# Library mapping settings
+library_mapping:
+  enabled: true
+  max_mismatches: 1      # Allow 1 mismatch for fuzzy matching
+  min_quality: 20        # Minimum average read quality (Phred)
+  generate_plots: true
+
+# Unmapped sequence analysis settings
+unmapped_analysis:
+  enabled: true
+  expected_length: 36    # Expected length of variable region (for contamination detection)
+  similarity_threshold: 0.9  # Threshold for clustering similar sequences
+  generate_plots: true
